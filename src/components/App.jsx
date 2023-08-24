@@ -54,7 +54,11 @@ export function App() {
       return;
     }
 
-    fetchImages();
+    const fetchAndSetImages = async () => {
+      await fetchImages();
+    };
+
+    fetchAndSetImages();
   }, [query, page]);
 
   return (
@@ -71,6 +75,7 @@ export function App() {
 }
 
 export default App;
+
 
 
 
