@@ -31,20 +31,6 @@ export function App() {
     setModalData(null);
   };
 
-  const fetchImages = async () => {
-    setLoading(true);
-
-    try {
-      const data = await getImages({ query, page });
-      setImages(prevImages => (page === 1 ? data.hits : [...prevImages, ...data.hits]));
-      setHasLoaded(true);
-    } catch (error) {
-      console.error('Error fetching images:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);
   };
@@ -53,13 +39,22 @@ export function App() {
     if (query === '') {
       return;
     }
-
-    const fetchAndSetImages = async () => {
-      await fetchImages();
-    };
-
-    fetchAndSetImages();
-  }, [query, page]);
+      const fetchImages = async () => {
+        setLoading(true);
+    
+        try {
+          const data = await getImages({ query, page });
+          setImages(prevImages => (page === 1 ? data.hits : [...prevImages, ...data.hits]));
+          setHasLoaded(true);
+        } catch (error) {
+          console.error('Error fetching images:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+    
+      fetchImages();
+    }, [query, page]);
 
   return (
     <div>
@@ -75,6 +70,8 @@ export function App() {
 }
 
 export default App;
+
+
 
 
 
